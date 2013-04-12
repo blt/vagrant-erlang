@@ -1,10 +1,11 @@
 Vagrant::Config.run do |config|
-  config.vm.box = "lucid64"
-  config.vm.box_url = "http://files.vagrantup.com/lucid64.box"
+  config.vm.box = "cent0s"
+  config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-i386-v20130309.box"
+  config.vm.host_name = "erl_virtual"
+  config.vm.customize [
+                       "modifyvm", :id,
+                       "--cpus", "2"
+                      ]
 
-  config.vm.provision :puppet do |puppet|
-    puppet.manifests_path = "puppet/manifests"
-    puppet.manifest_file  = "site.pp"
-	puppet.module_path    = "puppet/modules"
-  end
+  config.vm.provision :shell, :path => "setup.sh"
 end
